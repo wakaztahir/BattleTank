@@ -3,29 +3,13 @@
 
 #include "TankAIController.h"
 
-ATank* ATankAIController::GetControlledTank()
+void ATankAIController::Tick(float DeltaTime)
 {
-	auto pawn = GetPawn();
-	if (pawn)
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+	if (PlayerTank && ControlledTank)
 	{
-		return Cast<ATank>(pawn);
-	}
-	else
-	{
-		return nullptr;
-	}
-}
-
-ATank* ATankAIController::GetPlayerTank()
-{
-	auto pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-	if (pawn)
-	{
-		return Cast<ATank>(pawn);
-	}
-	else
-	{
-		return nullptr;
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+		ControlledTank->Fire(); //todo don't fire every frame
 	}
 }
