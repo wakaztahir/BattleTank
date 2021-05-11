@@ -2,6 +2,7 @@
 
 #pragma once
 #include "Projectile.h"
+#include "TankMovementComponent.h"
 
 #include "Tank.generated.h"
 
@@ -28,6 +29,8 @@ public:
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 	// Sets default values for this pawn's properties
@@ -49,7 +52,7 @@ private:
 	UTankBarrel* Barrel = nullptr; //Local Barrel Reference For Spawning Projectile
 
 	double LastFireTime = 0;
-	
-	UPROPERTY(EditDefaultsOnly,Category = Firing)
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3;
 };
