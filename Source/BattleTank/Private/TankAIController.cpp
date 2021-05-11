@@ -9,6 +9,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto ControlledTank = Cast<ATank>(GetPawn());
 	if (PlayerTank && ControlledTank)
 	{
+		MoveToActor(PlayerTank,AcceptanceRadius);
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		ControlledTank->Fire(); //todo don't fire every frame
 	}
