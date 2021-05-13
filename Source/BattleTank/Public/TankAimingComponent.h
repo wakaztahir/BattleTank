@@ -34,6 +34,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fire")
 	void Fire();
 
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+	                           FActorComponentTickFunction* ThisTickFunction) override;
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	EFiringState FiringStatus = EFiringState::Reloading;
