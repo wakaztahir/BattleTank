@@ -56,6 +56,7 @@ private:
 	bool IsBarrelMoving();
 	
 	double LastFireTime = 0;
+	
 	float ReloadTimeInSeconds = 3;
 
 	void MoveBarrelTowards(FVector AimDirection);
