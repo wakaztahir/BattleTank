@@ -12,6 +12,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+}
+
 void ATank::Initialize(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
@@ -25,7 +31,7 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-	if(!ensure(Barrel)){return;}
+	if (!ensure(Barrel)) { return; }
 	auto TimeInSeconds = FPlatformTime::Seconds();
 	bool isReloaded = (TimeInSeconds - LastFireTime) > ReloadTimeInSeconds;
 	if (isReloaded)
