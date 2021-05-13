@@ -4,6 +4,7 @@
 #include "TankAimingComponent.generated.h"
 
 
+
 UENUM()
 enum class EFiringState:uint8
 {
@@ -12,7 +13,7 @@ enum class EFiringState:uint8
 	Reloading
 };
 
-
+class AProjectile;
 class UTankTurret;
 class UTankBarrel;
 // Holds barrel's properties and Elevate method
@@ -25,22 +26,30 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	UFUNCTION(BlueprintCallable,Category = "Setup")
-	void Initialize(UTankBarrel* BarrelToSet,UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Fire")
+	void Fire();
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	EFiringState FiringStatus = EFiringState::Reloading;
-	
-private:
 
+private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
-	
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
-	
+
+	double LastFireTime = 0;
+	float ReloadTimeInSeconds = 3;
+
 	void MoveBarrelTowards(FVector AimDirection);
 };
