@@ -25,7 +25,6 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendTurnRight(float Throw);
 	
-private:
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 	UTankTrack* LeftTrack = nullptr;

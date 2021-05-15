@@ -4,13 +4,13 @@
 #include "TankAimingComponent.generated.h"
 
 
-
 UENUM()
 enum class EFiringState:uint8
 {
 	Locked,
 	Aiming,
-	Reloading
+	Reloading,
+	OutOfAmmo
 };
 
 class AProjectile;
@@ -31,12 +31,17 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = "Fire")
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+	EFiringState GetFiringState() const;
+	
+	UFUNCTION(BlueprintCallable,Category = "Firing")
+	int GetRoundsLeft();
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	EFiringState FiringStatus = EFiringState::Reloading;
@@ -51,12 +56,14 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 
+	int RoundsLeft = 100;
+
 	FVector CurrentAimDirection;
 
 	bool IsBarrelMoving();
-	
+
 	double LastFireTime = 0;
-	
+
 	float ReloadTimeInSeconds = 3;
 
 	void MoveBarrelTowards(FVector AimDirection);
